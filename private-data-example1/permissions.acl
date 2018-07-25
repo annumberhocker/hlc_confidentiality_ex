@@ -1,0 +1,164 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// Buyer and Seller Rules
+// Note: Not giving Buyer or Seller explicit access to the whole Order Asset by itself
+
+rule UpdateOrderBuyerInfo {
+    description: "Buyer and Seller can access order.BuyerInfo thru this transaction"
+    participant(p): "org.privatedata.exampleone.*"
+    operation: UPDATE, READ
+    resource(o): "org.privatedata.exampleone.Order"
+    transaction(tx): "org.privatedata.exampleone.UpdateOrderBuyerInfo"
+    condition: (tx.order.getIdentifier() === o.getIdentifier() &&
+               (o.seller.getIdentifier() === p.getIdentifier() ||
+                o.buyer.getIdentifier() === p.getIdentifier()))
+    action: ALLOW
+}
+
+rule CREATE_tx_UpdateOrderBuyerInfo {
+    description: "Buyer and Seller can create the transaction"
+    participant(p): "org.privatedata.exampleone.*"
+    operation: CREATE
+    resource(tx): "org.privatedata.exampleone.UpdateOrderBuyerInfo"
+    condition: (tx.order.buyer.getIdentifier() === p.getIdentifier() ||
+                tx.order.seller.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+// Seller Only Rules
+rule Seller_UpdateOrderSellerInfo {
+    description: "Only Seller can access order.SellerInfo thru this transaction"
+    participant(p): "org.privatedata.exampleone.Seller"
+    operation: UPDATE, READ
+    resource(o): "org.privatedata.exampleone.Order"
+    transaction(tx): "org.privatedata.exampleone.UpdateOrderSellerInfo"
+    condition: (tx.order.getIdentifier() === o.getIdentifier() && 
+                o.seller.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule CREATE_tx_UpdateOrderSellerInfo {
+    description: "Only Seller can create this transaction"
+    participant(p): "org.privatedata.exampleone.Seller"
+    operation: CREATE
+    resource(tx): "org.privatedata.exampleone.UpdateOrderSellerInfo"
+    condition: (tx.order.seller.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule SellerReadandCreateOrder {
+    description: "Allow Sellers to create order assets"
+    participant(p): "org.privatedata.exampleone.Seller"
+    operation:  CREATE
+    resource(o): "org.privatedata.exampleone.Order"
+    condition: (o.seller.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+ 
+rule CREATE_tx_CreateOrder {
+    description: "Allow Sellers to create the CreateOrder transaction"
+    participant(p): "org.privatedata.exampleone.Seller"
+    operation:  CREATE
+    resource(tx): "org.privatedata.exampleone.CreateOrder"
+    condition: (tx.seller.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule Seller_AccessOrderinCreateOrder {
+    description: "Seller can create an order asset thru this transaction"
+    participant(p): "org.privatedata.exampleone.Seller"
+    operation: CREATE
+    resource(o): "org.privatedata.exampleone.Order"
+    transaction(tx): "org.privatedata.exampleone.CreateOrder"
+    condition: (o.seller.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+//   Rules: Seller to Access Asset:Order and update price
+rule Seller_UpdateOrderPrice {
+    description: "Seller can access order.price thru this transaction"
+    participant(p): "org.privatedata.exampleone.Seller"
+    operation: UPDATE, READ
+    resource(o): "org.privatedata.exampleone.Order"
+    transaction(tx): "org.privatedata.exampleone.UpdateOrderPrice"
+    condition: (tx.order.getIdentifier() === o.getIdentifier() && 
+                o.seller.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule CREATE_tx_UpdateOrderPrice {
+    description: "Seller can create this transaction"
+    participant(p): "org.privatedata.exampleone.Seller"
+    operation: CREATE
+    resource(tx): "org.privatedata.exampleone.UpdateOrderPrice"
+    condition: (tx.order.seller.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule Seller_GetOrderInfo {
+    description: "Seller can read order info thru this transaction"
+    participant(p): "org.privatedata.exampleone.Seller"
+    operation: READ
+    resource(o): "org.privatedata.exampleone.Order"
+    transaction(tx): "org.privatedata.exampleone.GetOrderInfo"
+    condition: (tx.order.getIdentifier() === o.getIdentifier() && 
+                o.seller.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule CREATE_tx_GetOrderInfo {
+    description: "Seller can create this transaction"
+    participant(p): "org.privatedata.exampleone.Seller"
+    operation: CREATE
+    resource(tx): "org.privatedata.exampleone.GetOrderInfo"
+    condition: (tx.order.seller.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+///////// STANDARD RULES 
+
+rule ParticipantsSeeSelves {
+    description: "Let participants see themselves"
+    participant(p): "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource(r): "org.hyperledger.composer.system.Participant"
+    condition: (r.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}

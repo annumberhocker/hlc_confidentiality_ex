@@ -1,0 +1,136 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Sample access control list.
+ */
+rule BuyerReadOrder {
+    description: "Allow Buyer to read and update orders that they are associated with"
+    participant(p): "org.privatedata.exampletwo.Buyer"
+    operation: READ, UPDATE
+    resource(o): "org.privatedata.exampletwo.Order"
+    condition: (o.buyer.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule SellerReadandCreateOrder {
+    description: "Allow Sellers to do all operations on orders they are associated with"
+    participant(p): "org.privatedata.exampletwo.Seller"
+    operation: ALL
+    resource(o): "org.privatedata.exampletwo.Order"
+    condition: (o.seller.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule Seller_Create_Order {
+    description: "Allow Sellers to CRU an Order Asset within a CreateOrder Transaction"
+    participant(p): "org.privatedata.exampletwo.Seller"
+    operation: UPDATE, READ, CREATE
+    resource(o): "org.privatedata.exampletwo.Order"
+    transaction(tx): "org.privatedata.exampletwo.CreateOrder"
+    condition: (tx.order.seller.getIdentifier() == p.getIdentifier()) 
+    action: ALLOW
+}
+
+rule Seller_CREATE_PlaceOrder_TX {
+    description: "Allow Sellers to CREATE a PlaceOrder Transaction"
+    participant(p): "org.privatedata.exampletwo.Seller"
+    operation: CREATE
+    resource(tx): "org.privatedata.exampletwo.CreateOrder"
+    condition: (tx.seller.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule SellerReadandCreateOrderSellerInfo {
+    description: "Allow Sellers access to their orders' private info"
+    participant(p): "org.privatedata.exampletwo.Seller"
+    operation: READ, CREATE, UPDATE
+    resource(o): "org.privatedata.exampletwo.OrderSellerInfo"
+    condition: (o.order.seller.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule Seller_CRU_OrderSellerInfo {
+    description: "Allow Sellers to CRU an OrderSellerInfo Asset within a PlaceOrder Transaction"
+    participant(p): "org.privatedata.exampletwo.Seller"
+    operation: UPDATE, READ, CREATE
+    resource(i): "org.privatedata.exampletwo.OrderSellerInfo"
+    transaction(tx): "org.privatedata.exampletwo.CreateOrder"
+    condition: (tx.order.seller.getIdentifier() == p.getIdentifier()) 
+    action: ALLOW
+}
+
+rule Seller_CREATE_UpdateOrderSellerInfo_TX {
+    description: "Allow Sellers to create an AccessOrder_SellerInfo Transaction"
+    participant(p): "org.privatedata.exampletwo.Seller"
+    operation: CREATE
+    resource(tx): "org.privatedata.exampletwo.UpdateOrderSellerInfo"
+    condition: (tx.order.seller.getIdentifier() == p.getIdentifier()) 
+    action: ALLOW
+}
+
+rule Update_OrderBuyerInfo {
+    description: "Allow all to CRU buyerInfo on an Order Asset within a AccessOrderBuyerInfo Transaction"
+    participant(p): "org.privatedata.exampletwo.*"
+    operation: UPDATE, READ
+    resource(o): "org.privatedata.exampletwo.Order"
+    transaction(tx): "org.privatedata.exampletwo.UpdateOrderBuyerInfo"
+    condition: (tx.order.seller.getIdentifier() === p.getIdentifier() ||
+                tx.order.buyer.getIdentifier() === p.getIdentifier()) 
+    action: ALLOW
+}
+
+rule CREATE_AccessOrderBuyerInfo_TX {
+    description: "Allow Buyers and Sellers to create an UpdateOrderBuyerInfo Transaction"
+    participant(p): "org.privatedata.exampletwo.*"
+    operation: CREATE
+    resource(tx): "org.privatedata.exampletwo.UpdateOrderBuyerInfo"
+    condition: (tx.order.seller.getIdentifier() === p.getIdentifier() ||
+                tx.order.buyer.getIdentifier() === p.getIdentifier()) 
+    action: ALLOW
+}
+
+////// Standard Rules
+rule ParticipantsSeeSelves {
+    description: "Let participants see themselves"
+    participant(p): "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource(r): "org.hyperledger.composer.system.Participant"
+    condition: (r.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}

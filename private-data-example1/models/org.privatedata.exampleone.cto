@@ -1,0 +1,85 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Business network definition.
+ */
+namespace org.privatedata.exampleone
+
+participant Seller identified by sellerId {
+   o String sellerId
+   o String name
+}
+
+participant Buyer identified by buyerId {
+   o String buyerId
+   o String name
+}
+
+asset Order identified by orderId {
+  o String orderId
+  o String price          // visible to Buyer & Seller
+  o String buyerInfo      // visible to Buyer and Seller
+  o String sellerInfo     // private to seller;
+  --> Buyer buyer
+  --> Seller seller
+}
+
+// seller creates an order
+transaction CreateOrder {
+  o String orderId
+  o String price          
+  o String buyerInfo      
+  o String sellerInfo      
+  --> Buyer buyer          
+  --> Seller seller           
+}
+
+transaction UpdateOrderSellerInfo {
+  --> Order order
+  o String newInfo
+}
+
+transaction UpdateOrderBuyerInfo {
+  --> Order order
+  o String newInfo
+}
+
+transaction UpdateOrderPrice{
+  --> Order order
+  o String newPrice
+}
+
+transaction GetOrderInfo {
+  --> Order order
+}
+
+//  Events
+//  Following events provide a READ mechanism to get access to the orders.
+//  Purposefully, an "order" is not sent;  Fields of the given order are individually sent as
+//  payload in the event.
+event e_GetOrderPrice {
+  o String orderId
+  o String price
+}
+
+event e_GetBuyerInfo {
+  o String orderId
+  o String buyerInfo
+}
+
+event e_GetSellerInfo {
+  o String orderId
+  o String sellerInfo
+}

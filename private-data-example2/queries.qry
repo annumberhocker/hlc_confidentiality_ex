@@ -1,0 +1,24 @@
+/*
+* Sample queries for business network
+*/
+ 
+query selectBuyersOrders {
+  description: "Select all buyer's orders"
+  statement:
+     SELECT org.privatedata.exampletwo.Order
+        WHERE (buyer == _$buyerId)
+}
+
+query selectSellersOrders {
+  description: "Select all seller's orders"
+  statement:
+     SELECT org.privatedata.exampletwo.Order
+        WHERE (seller == _$sellerId)
+}
+
+query selectOrderSellerInfo {
+  description: "Select all seller's orders seller info"
+  statement:
+    SELECT org.privatedata.exampletwo.OrderSellerInfo
+  	  WHERE (seller == _$sellerId)
+}
