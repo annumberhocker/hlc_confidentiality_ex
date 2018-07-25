@@ -10,7 +10,7 @@ Basically, there are two different approaches:
 
 **Approach #1:** Restrict full access to the Asset (in this case the Order) but provide explicit User Defined Transaction functions and Access Control Rules on those functions that allow limited access to the individual data fields within the Asset.
 
-[Using Transactions to provide Access](solution1.png)
+[Using Transactions to provide Access](https://github.com/annumberhocker/hlc_confidentiality_ex/blob/master/screenshots/solution1.png)
 
 The code for this example is located in https://github.com/annumberhocker/hlc_confidentiality_ex/edit/master/private-data-example1
 
@@ -90,7 +90,7 @@ In this code, we demonstrate only emitting Events from within a Seller permissio
 
 
 **Approach #2:** Abstract out privatized data into its own Asset and control access to the Private Data Asset itself.
-[Using separate Assets to provide Access](solution2.png)
+[Using separate Assets to provide Access](https://github.com/annumberhocker/hlc_confidentiality_ex/blob/master/screenshots/solution2.png)
 
 Here, we have separated out the private data into it's own Asset in **org.privatedata.exampleone.cto** file:
 ```
