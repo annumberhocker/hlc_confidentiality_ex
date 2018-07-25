@@ -1,4 +1,4 @@
-# Implementing data privatization within Hyperledger Composer
+# Implementing Data Privatization Within Hyperledger Composer
 
 While some of the most important qualities of a Blockchain network are transparency and trust, there are times in a business situation when different participants need access into partially privatized data being exchanged/managed within their business relationship. For example, in a supply chain management system let us assume a Buyer and a Seller are part of the same Organization and are represented as different Participants in a Business Network Definition within a Hyperledger Composer model. In this scenario, the Buyer places an Order for an item from a Seller. In the Order Asset, there might be information that only the Seller should update and see, like wholesale price, payment info, availability, inventory, etc. And there might be public data that both participants should have access to like retail sales price, order id, tracking number, customer address.
 
