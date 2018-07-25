@@ -90,7 +90,8 @@ In this code, we demonstrate only emitting Events from within a Seller permissio
 
 
 **Approach #2:** Abstract out privatized data into its own Asset and control access to the Private Data Asset itself.
-![Using separate Assets to provide Access]screenshots/solution2.png)
+
+![Using separate Assets to provide Access](screenshots/solution2.png)
 
 Here, we have separated out the private data into it's own Asset in **org.privatedata.exampleone.cto** file:
 ```
