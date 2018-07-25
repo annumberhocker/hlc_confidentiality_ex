@@ -92,7 +92,7 @@ In this code, we demonstrate only emitting Events from within a Seller permissio
 
 ![Using separate Assets to provide Access](screenshots/solution2.png)
 
-Here, we have separated out the private data into it's own Asset in **org.privatedata.exampletwo.cto** file:
+Here, we have separated out the private data into its own Asset in **org.privatedata.exampletwo.cto** file:
 ```
 // Assets
 asset OrderSellerInfo identified by infoId {
