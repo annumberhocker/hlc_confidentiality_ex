@@ -14,7 +14,8 @@ The code for this example is located in https://github.com/annumberhocker/hlc_co
 
 Note the rules in the permissions.acl file. The only access given to the Order Asset is the ability to create it within the CreateOrder Transaction function:
 
-```rule SellerReadandCreateOrder {
+```
+rule SellerReadandCreateOrder {
     description: "Allow Sellers to create order assets"
     participant(p): "org.privatedata.exampleone.Seller"
     operation:  CREATE
@@ -91,7 +92,7 @@ In this code, we demonstrate only emitting Events from within a Seller permissio
 
 ![Using separate Assets to provide Access](screenshots/solution2.png)
 
-Here, we have separated out the private data into it's own Asset in **org.privatedata.exampleone.cto** file:
+Here, we have separated out the private data into it's own Asset in **org.privatedata.exampletwo.cto** file:
 ```
 // Assets
 asset OrderSellerInfo identified by infoId {
