@@ -1,8 +1,6 @@
-# Confidentiality vs Single Version of Truth
+# Implementing data privatization within Hyperledger Composer
 
-## Implementing partial data privatization using Hyperledger Composer
-
-While some of the most important qualities of a Blockchain network are transparency and trust, there are times in a business situation when different participants need access into partially privatized data being exchanged/managed within their business relationship. For example, in a supply chain management system let’s assume a Buyer and a Seller are part of the same Organization and are represented as different Participants in a Business Network Definition within a Hyperledger Composer model. In this scenario, the Buyer places an Order for an item from a Seller. In the Order Asset, there might be information that only the Seller should update and see, like wholesale price, payment info, availability, inventory, etc. And there might be public data that both participants should have access to like retail sales price, order id, tracking number, customer address.
+While some of the most important qualities of a Blockchain network are transparency and trust, there are times in a business situation when different participants need access into partially privatized data being exchanged/managed within their business relationship. For example, in a supply chain management system let us assume a Buyer and a Seller are part of the same Organization and are represented as different Participants in a Business Network Definition within a Hyperledger Composer model. In this scenario, the Buyer places an Order for an item from a Seller. In the Order Asset, there might be information that only the Seller should update and see, like wholesale price, payment info, availability, inventory, etc. And there might be public data that both participants should have access to like retail sales price, order id, tracking number, customer address.
 
 One of the benefits that Hyperledger Composer provides is simple modeling to define access control rules to govern defined Assets, Participants and Transactions. The Access Control syntax allows rules to be defined against an entire Asset and/or a Transaction Function. At this present time, rules cannot be defined against specific data fields within an Asset. So other than limiting access to an Asset’s data at the Application level how can we restrict access at the network level?
 
@@ -14,7 +12,7 @@ Basically, there are two different approaches:
 
 The code for this example is located in https://github.com/annumberhocker/hlc_confidentiality_ex/tree/master/private-data-example1
 
-Note the rules in the permissions.acl file. The only access given to the Order Asset is the abiity to create it within the CreateOrder Transaction function:
+Note the rules in the permissions.acl file. The only access given to the Order Asset is the ability to create it within the CreateOrder Transaction function:
 
 ```rule SellerReadandCreateOrder {
     description: "Allow Sellers to create order assets"
@@ -73,7 +71,7 @@ rule CREATE_tx_UpdateOrderBuyerInfo {
 To see the data privatization in action, 
 1)	Invoke the online [Bluemix Composer Playground](https://composer-playground.mybluemix.net/login).
 2)  "Deploy a new business network"
-3)  select "Drop here to upload or browse" and select the [private-data-example1@0.0.1.bna.bna](https://github.com/annumberhocker/hlc_confidentiality_ex/edit/master/private-data-example1/private-data-example1@0.0.1.bna)
+3)  Select "Drop here to upload or browse" and select the [private-data-example1@0.0.1.bna](https://github.com/annumberhocker/hlc_confidentiality_ex/edit/master/private-data-example1/private-data-example1@0.0.1.bna)
 4)	“Deploy changes”. 
 5)	Select the “Test” tab.
 6)	Create a Buyer and a Seller participant. 
@@ -123,7 +121,7 @@ To see the data privatization in action in this example:
 
 1)	Invoke the online [Bluemix Composer Playground](https://composer-playground.mybluemix.net/login).
 2)  "Deploy a new business network"
-3)  select "Drop here to upload or browse" and select the [private-data-example2@0.0.1.bna.bna](https://github.com/annumberhocker/hlc_confidentiality_ex/edit/master/private-data-example1/private-data-example2@0.0.1.bna)
+3)  Select "Drop here to upload or browse" and select the [private-data-example2@0.0.1.bna](https://github.com/annumberhocker/hlc_confidentiality_ex/edit/master/private-data-example1/private-data-example2@0.0.1.bna)
 4)	“Deploy changes”. 
 5)	Select the “Test” tab.
 6)	Create a Buyer and a Seller participant. 
