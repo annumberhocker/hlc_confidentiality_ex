@@ -76,7 +76,7 @@ To see the data privatization in action,
 4)	“Deploy changes”. 
 5)	Select the “Test” tab.
 6)	Create a Buyer and a Seller participant. 
-7)	Create ids for the Buyer and Seller.  To do this see [Creating a Business Network Card.](https://hyperledger.github.io/composer/latest/playground/id-cards-playground) 
+7)	Create ids for the Buyer and Seller.  To do this see [Creating a Business Network Card].(https://hyperledger.github.io/composer/latest/playground/id-cards-playground) 
 8)	Switch to Seller id.
 9)	As the Seller, Submit a CreateOrder transaction function.  
 Note: you will need to switch back to the Admin id to see the new Order asset since neither the Buyer nor the Seller have READ access to the actual Order Asset.
@@ -126,7 +126,7 @@ To see the data privatization in action in this example:
 4)	“Deploy changes”. 
 5)	Select the “Test” tab.
 6)	Create a Buyer and a Seller participant. 
-7)	Create ids for the Buyer and Seller.  To do this see [Creating a Business Network Card.]
+7)	Create ids for the Buyer and Seller.  To do this see [Creating a Business Network Card].(https://hyperledger.github.io/composer/latest/playground/id-cards-playground)
 8)	Switch to Seller id.
 9)	As the Seller, Submit a CreateOrder transaction function.  Note: an Order Asset and an OrderSellerInfo Asset will be created.  The Seller can see both.
 10)	As the seller, invoke a CreateOrder transaction function.  
