@@ -92,6 +92,8 @@ In this code, we demonstrate only emitting Events from within a Seller permissio
 
 ![Using separate Assets to provide Access](screenshots/solution2.png)
 
+The code for this example is located in https://github.com/annumberhocker/hlc_confidentiality_ex/tree/master/private-data-example2
+
 Here, we have separated out the private data into its own Asset in **org.privatedata.exampletwo.cto** file:
 ```
 // Assets
