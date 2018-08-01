@@ -119,6 +119,36 @@ transaction UpdateOrderSellerInfo {
 }
 
 ```
+The Access Control Rules allowing the Seller access to the Private Data Asset are as such: 
+```
+rule SellerReadandCreateOrderSellerInfo {
+    description: "Allow Sellers access to their orders' private info"
+    participant(p): "org.privatedata.exampletwo.Seller"
+    operation: READ, CREATE, UPDATE
+    resource(o): "org.privatedata.exampletwo.OrderSellerInfo"
+    condition: (o.order.seller.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule Seller_CRU_OrderSellerInfo {
+    description: "Allow Sellers to CRU an OrderSellerInfo Asset within a PlaceOrder Transaction"
+    participant(p): "org.privatedata.exampletwo.Seller"
+    operation: UPDATE, READ, CREATE
+    resource(i): "org.privatedata.exampletwo.OrderSellerInfo"
+    transaction(tx): "org.privatedata.exampletwo.CreateOrder"
+    condition: (tx.order.seller.getIdentifier() == p.getIdentifier()) 
+    action: ALLOW
+}
+
+rule Seller_CREATE_UpdateOrderSellerInfo_TX {
+    description: "Allow Sellers to create an AccessOrder_SellerInfo Transaction"
+    participant(p): "org.privatedata.exampletwo.Seller"
+    operation: CREATE
+    resource(tx): "org.privatedata.exampletwo.UpdateOrderSellerInfo"
+    condition: (tx.order.seller.getIdentifier() == p.getIdentifier()) 
+    action: ALLOW
+}
+```
 
 To see the data privatization in action in this example:
 
