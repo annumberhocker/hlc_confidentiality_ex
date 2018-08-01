@@ -12,7 +12,7 @@ Basically, there are two different approaches:
 
 The code for this example is located in https://github.com/annumberhocker/hlc_confidentiality_ex/tree/master/private-data-example1
 
-Note the rules in the permissions.acl file. The only access given to the Order Asset is the ability to create it within the CreateOrder Transaction function:
+Note the rules in the permissions.acl file. The only access given to the *Order* Asset is the ability to create it within the *CreateOrder* Transaction function:
 
 ```
 rule SellerReadandCreateOrder {
@@ -44,7 +44,7 @@ rule Seller_AccessOrderinCreateOrder {
 }
 
 ```
-Otherwise, only access is given through transactions such as:
+Therefore, access to the *Order* Asset's individual fields is given through Transactions functions such as:
 ```
 rule UpdateOrderBuyerInfo {
     description: "Buyer and Seller can access order.BuyerInfo thru this transaction"
@@ -76,7 +76,7 @@ To see the data privatization in action,
 4)	“Deploy changes”. 
 5)	Select the “Test” tab.
 6)	Create a Buyer and a Seller participant. 
-7)	Create ids for the Buyer and Seller.  To do this see [Creating a Business Network Card].(https://hyperledger.github.io/composer/latest/playground/id-cards-playground) 
+7)	Create ids for the Buyer and Seller.  To do this see [Creating a Business Network Card](https://hyperledger.github.io/composer/latest/playground/id-cards-playground). 
 8)	Switch to Seller id.
 9)	As the Seller, Submit a CreateOrder transaction function.  
 Note: you will need to switch back to the Admin id to see the new Order asset since neither the Buyer nor the Seller have READ access to the actual Order Asset.
@@ -94,7 +94,7 @@ In this code, we demonstrate only emitting Events from within a Seller permissio
 
 The code for this example is located in https://github.com/annumberhocker/hlc_confidentiality_ex/tree/master/private-data-example2
 
-Here, we have separated out the private data into its own Asset in **org.privatedata.exampletwo.cto** file:
+Here, we have separated out the private data within the *Order* Asset into its own *OrderSellerInfo* Asset in **org.privatedata.exampletwo.cto** file:
 ```
 // Assets
 asset OrderSellerInfo identified by infoId {
@@ -128,7 +128,7 @@ To see the data privatization in action in this example:
 4)	“Deploy changes”. 
 5)	Select the “Test” tab.
 6)	Create a Buyer and a Seller participant. 
-7)	Create ids for the Buyer and Seller.  To do this see [Creating a Business Network Card].(https://hyperledger.github.io/composer/latest/playground/id-cards-playground)
+7)	Create ids for the Buyer and Seller.  To do this see [Creating a Business Network Card](https://hyperledger.github.io/composer/latest/playground/id-cards-playground).
 8)	Switch to Seller id.
 9)	As the Seller, Submit a CreateOrder transaction function.  Note: an Order Asset and an OrderSellerInfo Asset will be created.  The Seller can see both.
 10)	As the seller, invoke a CreateOrder transaction function.  
@@ -136,7 +136,7 @@ To see the data privatization in action in this example:
 12)	The Seller can update the buyerInfo and the sellerInfo on the Order Asset either using the UpdateOrderBuyerInfo and the UpdateOrderSellerInfo transaction functions.
 13)	The Buyer can only update the buyerInfo on the Order Asset.
 
-To finish out this example a .qry file can added to the model to define queries against the privatized asset and a transaction function can be added to include the code to call on the queries that have been defined to get access to the privatized Asset data. Or the query can be invoked directly from the client application. See the [Queries Tutorial](https://hyperledger.github.io/composer/latest/tutorials/queries) and [Query Language Reference Documentation](https://hyperledger.github.io/composer/latest/api/client-businessnetworkconnection#buildquery) for more information.
+To finish out this example a .qry file can added to the model (see [queries.qry](https://github.com/annumberhocker/hlc_confidentiality_ex/blob/master/private-data-example2/queries.qry)) to define queries against the privatized asset and a transaction function can be added to include the code to call on the queries that have been defined to get access to the privatized Asset data. Or the query can be invoked directly from the client application. See the [Queries Tutorial](https://hyperledger.github.io/composer/latest/tutorials/queries) and [Query Language Reference Documentation](https://hyperledger.github.io/composer/latest/api/client-businessnetworkconnection#buildquery) for more information.
 
 In summary, there are several ways think about data privacy.  Depending on how your network is architected, you might want to address this at the Fabric level using [Channels](https://hyperledger-fabric.readthedocs.io/en/release-1.1/channels.html) and eventually [Collections](https://hyperledger-fabric.readthedocs.io/en/release-1.2/private-data/private-data.html).  In this article we addressed it at the higher level in the Business Network design using Hyperledger Composer.
 
