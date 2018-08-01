@@ -141,7 +141,7 @@ rule Seller_CREATE_OrderSellerInfo_in_CreateOrder {
 }
 
 rule Seller_CREATE_UpdateOrderSellerInfo_TX {
-    description: "Allow Sellers to create an AccessOrder_SellerInfo Transaction"
+    description: "Allow Sellers to create an UpdateOrderSellerInfo Transaction"
     participant(p): "org.privatedata.exampletwo.Seller"
     operation: CREATE
     resource(tx): "org.privatedata.exampletwo.UpdateOrderSellerInfo"
