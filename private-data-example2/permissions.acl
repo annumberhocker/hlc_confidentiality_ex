@@ -52,7 +52,7 @@ rule Seller_CREATE_PlaceOrder_TX {
     action: ALLOW
 }
 
-rule SellerReadandCreateOrderSellerInfo {
+rule Seller_CRU_OrderSellerInfo {
     description: "Allow Sellers access to their orders' private info"
     participant(p): "org.privatedata.exampletwo.Seller"
     operation: READ, CREATE, UPDATE
@@ -61,7 +61,7 @@ rule SellerReadandCreateOrderSellerInfo {
     action: ALLOW
 }
 
-rule Seller_CRU_OrderSellerInfo {
+rule Seller_CRU_OrderSellerInfo_in_CreateOrder {
     description: "Allow Sellers to CRU an OrderSellerInfo Asset within a PlaceOrder Transaction"
     participant(p): "org.privatedata.exampletwo.Seller"
     operation: UPDATE, READ, CREATE
