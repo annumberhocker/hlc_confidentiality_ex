@@ -121,7 +121,7 @@ transaction UpdateOrderSellerInfo {
 ```
 The Access Control Rules allowing the Seller access to the Private Data Asset are as such: 
 ```
-rule SellerReadandCreateOrderSellerInfo {
+rule Seller_CRU_OrderSellerInfo {
     description: "Allow Sellers access to their orders' private info"
     participant(p): "org.privatedata.exampletwo.Seller"
     operation: READ, CREATE, UPDATE
@@ -130,10 +130,10 @@ rule SellerReadandCreateOrderSellerInfo {
     action: ALLOW
 }
 
-rule Seller_CRU_OrderSellerInfo {
+rule Seller_CREATE_OrderSellerInfo_in_CreateOrder {
     description: "Allow Sellers to CRU an OrderSellerInfo Asset within a PlaceOrder Transaction"
     participant(p): "org.privatedata.exampletwo.Seller"
-    operation: UPDATE, READ, CREATE
+    operation: CREATE
     resource(i): "org.privatedata.exampletwo.OrderSellerInfo"
     transaction(tx): "org.privatedata.exampletwo.CreateOrder"
     condition: (tx.order.seller.getIdentifier() == p.getIdentifier()) 
