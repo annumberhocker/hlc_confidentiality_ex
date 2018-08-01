@@ -131,7 +131,7 @@ rule Seller_CRU_OrderSellerInfo {
 }
 
 rule Seller_CREATE_OrderSellerInfo_in_CreateOrder {
-    description: "Allow Sellers to CRU an OrderSellerInfo Asset within a PlaceOrder Transaction"
+    description: "Allow Sellers to CREATE an OrderSellerInfo Asset within a CreateOrder Transaction"
     participant(p): "org.privatedata.exampletwo.Seller"
     operation: CREATE
     resource(i): "org.privatedata.exampletwo.OrderSellerInfo"
