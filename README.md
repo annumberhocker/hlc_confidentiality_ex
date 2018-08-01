@@ -1,12 +1,12 @@
 # Implementing Data Privatization Within Hyperledger Composer
 
-While some of the most important features of a Hyperledger Blockchain network are transparency and trust, there are times in a business situation when different participants need access into partially privatized data being exchanged/managed within their business relationship. For example, in a supply chain management system let us assume a Buyer and a Seller are part of the same Organization and are represented as different Participants in a Business Network Definition within a Hyperledger Composer model. In this scenario, the Buyer places an Order for an item from a Seller. In the Order Asset, there might be information that only the Seller should update and see, like wholesale price, payment info, availability, inventory, etc. And there might be public data that both participants should have access to like retail sales price, order id, tracking number, customer address.
+While some of the most important features of a Hyperledger Blockchain network are transparency and trust, there are times in a business situation when different participants need access into partially privatized data being exchanged/managed within their business relationship. For example, in a supply chain management system let us assume a Buyer and a Seller are part of the same Organization and are represented as different Participants in a Business Network Definition within a Hyperledger Composer model. In this scenario, the Buyer places an Order for an item from a Seller. In the Order, there might be information that only the Seller should update and see, like wholesale price, payment info, availability, inventory, etc. And there might be public data that both participants should have access to like retail sales price, order id, tracking number, customer address.
 
 One of the benefits that Hyperledger Composer provides is simple modeling to define access control rules to govern defined Assets, Participants and Transactions. The Access Control syntax allows rules to be defined against an entire Asset and/or a Transaction Function. At this present time, rules cannot be defined against specific data fields within an Asset. So other than limiting access to an Asset’s data at the Application level how can we restrict access at the network level?
 
 Basically, there are two different approaches:
 
-**Approach #1:** Restrict full access to the Asset (in this case the Order) but provide explicit User Defined Transaction functions and Access Control Rules on those functions that allow limited access to the individual data fields within the Asset.
+**Approach #1:** Restrict full access to the Asset (in this case the *Order*) but provide explicit User Defined Transaction functions and Access Control Rules on those functions that allow limited access to the individual data fields within the Asset.
 
 ![Using Transactions to provide Access](screenshots/solution1.png)
 
